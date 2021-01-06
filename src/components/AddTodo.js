@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {View, StyleSheet, TextInput, Keyboard, Alert} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import {THEME} from "../theme";
 
 export const AddTodo = ({onSubmit}) => {
   const [value, setValue] = useState('');
@@ -9,6 +11,7 @@ export const AddTodo = ({onSubmit}) => {
     if(value.trim()){
       onSubmit(value);
       setValue('');
+      Keyboard.dismiss();
     }else{
       Alert.alert('Название не может быть пустым');
     }
@@ -24,7 +27,10 @@ export const AddTodo = ({onSubmit}) => {
         value={value}
         placeholder="Введите название дела"
       />
-      <Button title="Добавить" onPress={pressHandler} />
+      {/*<Button title="Добавить" onPress={pressHandler} />*/}
+      <AntDesign.Button onPress={pressHandler} name="plus">
+        Добавить
+      </AntDesign.Button>
     </View>
   )
 }
@@ -41,6 +47,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderStyle: 'solid',
     borderBottomWidth: 2,
-    borderBottomColor: '#3949ab'
+    borderBottomColor: THEME.MAIN_COLOR
   }
 });
