@@ -7,26 +7,40 @@ export const EditModal = ({visible, onCancel, value, onSave}) => {
   const [title, setTitle] = useState(value);
 
   const saveHandler = () => {
-    if(title.trim().length < 3){
-       Alert.alert('Ошибка!', `Минимальная длинна текста 3 символа`);
-    }else{
-      onSave(title);
+    if (title.trim().length < 3) {
+      Alert.alert(
+        'Ошибка!',
+        `Минимальная длинна названия 3 символа. Сейчас ${
+          title.trim().length
+        } символов.`
+      )
+    } else {
+      onSave(title)
     }
   }
 
+  const cancelHandler = () => {
+    setTitle(value);
+    onCancel();
+  }
+
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={visible} animationType='slide' transparent={false}>
       <View style={styles.wrap}>
         <TextInput
-          style={styles.input}
           value={title}
           onChangeText={setTitle}
+          style={styles.input}
+          placeholder='Введите название'
+          autoCapitalize='none'
+          autoCorrect={false}
+          maxLength={64}
         />
         <View style={styles.buttons}>
-          {/*<Button title="Отменить" onPress={onCancel} color={THEME.DANGER_COLOR}/>*/}
-          <AppButton onPress={onCancel} color={THEME.DANGER_COLOR} >Назад</AppButton>
-          <AppButton onPress={saveHandler} color={THEME.MAIN_COLOR} >Сохранить</AppButton>
-          {/*<Button title="Сохранить" onPress={saveHandler}/>*/}
+          <AppButton onPress={cancelHandler } color={THEME.DANGER_COLOR}>
+            Отменить
+          </AppButton>
+          <AppButton onPress={saveHandler}>Сохранить</AppButton>
         </View>
       </View>
     </Modal>
